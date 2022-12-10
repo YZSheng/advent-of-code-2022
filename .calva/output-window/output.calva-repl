@@ -63,3 +63,26 @@ clj꞉aoc2022.day01.solution꞉> 
 clj꞉aoc2022.day01.solution꞉> 
 68467
 clj꞉aoc2022.day01.solution꞉> 
+#'aoc2022.day01.solution/solve-part-two
+clj꞉aoc2022.day01.solution꞉> 
+(6000 4000 11000)
+clj꞉aoc2022.day01.solution꞉> 
+(0 1 6 8 14)
+clj꞉aoc2022.day01.solution꞉> 
+(14 8 6 1 0)
+clj꞉aoc2022.day01.solution꞉> 
+#'aoc2022.day01.solution/solve-part-two
+clj꞉aoc2022.day01.solution꞉> 
+(24000 11000 10000)
+clj꞉aoc2022.day01.solution꞉> 
+#'aoc2022.day01.solution/solve-part-two
+clj꞉aoc2022.day01.solution꞉> 
+; Execution error (ArityException) at aoc2022.day01.solution/solve-part-two (form-init3245223815381039479.clj:22).
+; Wrong number of args (3) passed to: aoc2022.day01.solution/solve-part-two/fn--8536
+clj꞉aoc2022.day01.solution꞉> 
+#'aoc2022.day01.solution/solve-part-two
+clj꞉aoc2022.day01.solution꞉> 
+45000
+clj꞉aoc2022.day01.solution꞉> 
+203420
+clj꞉aoc2022.day01.solution꞉> 
