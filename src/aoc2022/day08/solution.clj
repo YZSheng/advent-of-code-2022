@@ -39,6 +39,7 @@
                               (is-visible  grid x y))
                             (filter true?)
                             count)]
+    ;; four corner values are counted twice
     (+ inner-visible w h w h -4)))
 
 (part-one-solution "resources/day08/sample.txt")
