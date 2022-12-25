@@ -45,33 +45,12 @@
 (part-one-solution "resources/day08/sample.txt")
 (part-one-solution "resources/day08/part-one.txt")
 
-(get-neighbours (parse-input "resources/day08/sample.txt") 2 1)
-
-(defn find-inners [w h pairs]
-  (filter (fn [[x y]]
-            (and (< 0 x)
-                 (< 0 y)
-                 (< x w)
-                 (< y h))) pairs))
-
-(defn find-inner-neighbours [grid neighbours]
-  (let [w (count (first grid))
-        h (count grid)]
-    (map #(find-inners w h %) neighbours)))
-
 (def sample-grid (parse-input "resources/day08/sample.txt"))
 sample-grid
-
-(find-inner-neighbours sample-grid (get-neighbours sample-grid 2 1))
-
-(get-neighbours sample-grid 2 1)
-(map #(find-inners 5 5 %) (get-neighbours sample-grid 2 1))
-(find-inners 5 5 [[1 1]])
 
 (defn count-visible [grid x y]
   (let [value (get-in-grid grid [x y])
         neighour-list (get-neighbours grid x y)
-        inner-neighbours (find-inner-neighbours grid neighour-list)
         n-vals (map (fn [ls]
                       (map #(get-in-grid grid %) ls)) neighour-list)]
     (map (fn [vals] (let [result (take-while #(> value %) vals)]
@@ -80,28 +59,20 @@ sample-grid
                         (conj result value))
                       n-vals)))))
 
-(count-visible sample-grid 2 1)
-(count-visible sample-grid 2 3)
+(defn part-two-all-products [input]
+  (let [grid (parse-input input)
+        w (count (first grid))
+        h (count grid)]
+    (for [y (range 1 (dec h))
+          x (range 1 (dec w))]
+      (let [visible-count (count-visible grid x y)]
+        (apply * (map count visible-count))))))
 
 (defn part-two-solution [input]
-  (let [grid (parse-input input)]
-    (for [x (range (count (first grid)))
-          y (range (count grid))
-          visible-count (count-visible grid x y)]
-      (->> visible-count
-           (filter not-empty)))))
+  (apply max (part-two-all-products input)))
 
 (part-two-solution "resources/day08/sample.txt")
-(count-visible sample-grid 0 0)
-
-(partition-by #(> 5 %) [1 2 3 4 5 5 4 3 5 1])
-
-(->> [[] [1 2] [3 4]]
-     (filter not-empty)
-     (map count)
-     (apply *))
-
-(apply max [1 2 4 3 5])
+(part-two-solution "resources/day08/part-one.txt")
 
 (comment
 
