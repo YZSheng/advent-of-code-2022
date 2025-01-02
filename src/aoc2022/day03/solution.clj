@@ -10,17 +10,11 @@ ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw")
 
 (defn split-str [input]
-  (let [half (/ (count input) 2)]
+  (let [half (quot (count input) 2)]
     [(subs input 0 half) (subs input half)]))
 
-(defn find-common-char [[a b]]
-  (first (intersection (set a) (set b))))
-
-(defn parse-input [input]
-  (->> input
-       (str/split-lines)
-       (map split-str)
-       (map find-common-char)))
+(defn find-common-char [colls]
+  (first (reduce intersection (map set colls))))
 
 (defn priority [c]
   (let [intcode (int c)]
@@ -28,26 +22,26 @@ CrZsJsPPZsGzwwsLwLmpwMDw")
       (- intcode 96)
       (- intcode 38))))
 
-(comment
-  (set "abc")
-
-  (find-common-char ["abc" "aeg"])
-  (parse-input sample-input)
-
-  (int \a)
-  (int \A)
-  (int \Z)
-  (split-str "abcd")
-  (priority \a)
-  (priority \z)
-  (priority \A)
-  (priority \Z))
-
 (defn solve1 [input]
   (->> input
-       parse-input
+       (str/split-lines)
+       (map split-str)
+       (map find-common-char)
        (map priority)
        (reduce +)))
 
 (solve1 sample-input)
 (solve1 (slurp "resources/day03/input.txt"))
+
+;; part 2
+
+(defn solve2 [input]
+  (->> input
+       (str/split-lines)
+       (partition 3)
+       (map find-common-char)
+       (map priority)
+       (reduce +)))
+
+(solve2 sample-input)
+(solve2 (slurp "resources/day03/input.txt"))
