@@ -37,12 +37,12 @@ CrZsJsPPZsGzwwsLwLmpwMDw")
   (int \a)
   (int \A)
   (int \Z)
+  (split-str "abcd")
   (priority \a)
   (priority \z)
   (priority \A)
   (priority \Z))
 
-(split-str "abcd")
 (defn solve1 [input]
   (->> input
        parse-input
