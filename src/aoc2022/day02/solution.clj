@@ -55,11 +55,11 @@ C Z")
 
 (solve1 (slurp "resources/day02/input.txt"))
 
-(comment
-(calc-score "A" "Y")
-(calc-score "B" "X")
-(calc-score "C" "Z")
-  )
+(comment 
+
+  (calc-score "A" "Y") 
+  (calc-score "B" "X") 
+  (calc-score "C" "Z"))
 ;; opponent
 ;; A - Rock
 ;; B - Paper
@@ -102,4 +102,5 @@ C Z")
 (defn solve2 [input] (->> input (parse-input) (map #(apply calc-score-2 %))
                           (reduce +)))
 
-(solve2 sample-input) (solve2 (slurp "resources/day02/input.txt"))
+(solve2 sample-input) 
+(solve2 (slurp "resources/day02/input.txt"))
