@@ -17,8 +17,8 @@ move 1 from 1 to 2")
 (defn parse-stacks [stacks]
   (->> stacks
        str/split-lines
-       (map #(partition 3 4 %))
        drop-last
+       (map #(partition 3 4 %))
        (map #(map second %))
        transpose
        (mapv (fn [chars] (filter #(not= \space %) chars)))))
@@ -36,15 +36,19 @@ move 1 from 1 to 2")
           [(parse-stacks stacks)
            (parse-instructions instructions)]))))
 
-(defn move [stacks [amount from to]]
-  (let [from-index (dec from)
-        to-index (dec to)
-        moved (take amount (nth stacks from-index))
-        updated-from (drop amount (nth stacks from-index))
-        updated-to (concat (reverse moved) (nth stacks to-index))]
-    (-> stacks
-        (assoc from-index updated-from)
-        (assoc to-index updated-to))))
+(defn move
+  ([stacks [amount from to] f]
+   (let [from-index (dec from)
+         to-index (dec to)
+         moved (take amount (nth stacks from-index))
+         updated-from (drop amount (nth stacks from-index))
+         updated-to (concat (f moved) (nth stacks to-index))]
+     (-> stacks
+         (assoc from-index updated-from)
+         (assoc to-index updated-to))))
+
+  ([stacks instruction]
+   (move stacks instruction identity)))
 
 (defn solve1 [input]
   (let [[stacks instructions] (parse-input input)]
@@ -52,10 +56,24 @@ move 1 from 1 to 2")
            instructions instructions]
       (if (empty? instructions)
         (apply str (map first stacks))
-        (recur (move stacks (first instructions)) (rest instructions))))))
+        (recur (move stacks (first instructions) reverse) (rest instructions))))))
 
 (comment
   (parse-input sample-input))
 
 (solve1 sample-input)
 (solve1 (slurp "resources/day05/input.txt"))
+
+;; part 2
+
+(defn solve2 [input]
+  (let [[stacks instructions] (parse-input input)]
+    (loop [stacks stacks
+           instructions instructions]
+      (if (empty? instructions)
+        (apply str (map first stacks))
+        (recur (move stacks (first instructions)) (rest instructions))))))
+
+(solve2 sample-input)
+(solve2 (slurp "resources/day05/input.txt"))
+
