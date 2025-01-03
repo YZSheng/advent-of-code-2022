@@ -22,3 +22,17 @@
 (solve1 sample-input)
 (solve1 (slurp "resources/day04/input.txt"))
 
+;; part 2
+(defn solve2 [input]
+  (->> input
+       (str/split-lines)
+       (map #(re-seq #"\d+" %))
+       (map #(map parse-long %))
+       (map #(partition 2 %))
+       (map #(sort-by first %))
+       (filter (fn [[[_ a-to] [b-from _]]]
+                 (>= a-to b-from)))
+       count))
+
+(solve2 sample-input)
+(solve2 (slurp "resources/day04/input.txt"))
