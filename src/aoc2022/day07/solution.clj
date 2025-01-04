@@ -74,6 +74,8 @@ $ ls
                 dir)]
     [size (if (< size 100000) (conj results size) results)]))
 
+(calculate-size (construct-dir sample-input))
+
 (defn solve1 [input]
   (let [[_ results] (calculate-size (construct-dir input))]
     (apply + results)))
@@ -82,3 +84,28 @@ $ ls
 (solve1 (slurp "resources/day07/input.txt"))
 
 ;; part 2
+
+(defn calculate-size-with-each-dir [dir]
+  (let [[size results]
+        (reduce (fn [[acc results] [_ value]]
+                  (if (map? value)
+                    (let [[child-size child-results] (calculate-size value)]
+                      [(+ acc child-size) (concat results child-results)])
+                    [(+ acc value) results]))
+                [0 []]
+                dir)]
+    [size (conj results size)]))
+
+(calculate-size-with-each-dir (construct-dir sample-input))
+
+(defn solve2 [input]
+  (let [[total-size dir-sizes] (calculate-size-with-each-dir (construct-dir input))
+        size-left (- 70000000 total-size)]
+    (->> dir-sizes
+         (sort)
+         (filter #(>= (+ size-left %) 30000000))
+         (first))))
+
+(solve2 sample-input)
+(solve2 (slurp "resources/day07/input.txt"))
+
