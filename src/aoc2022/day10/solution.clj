@@ -188,7 +188,7 @@ noop
             crt (mod i 40)
             should-print (and (>= crt (dec sprite-location-row)) (<= crt (inc sprite-location-row)))]
         (if should-print (print "#") (print "."))
-        (if (= crt 39) (println))))))
+        (when (= crt 39) (println))))))
 
 (solve2 sample-input)
 (solve2 (slurp "resources/day10/input.txt"))
