@@ -178,3 +178,18 @@ noop
 
 (solve1 sample-input)
 (solve1 (slurp "resources/day10/input.txt"))
+
+(defn solve2 [input]
+  (let [instructions (parse-input input)
+        results (generate-results instructions)]
+    (doseq [i (range 240)]
+      (let [sprite-location (nth results i)
+            sprite-location-row (mod sprite-location 40)
+            crt (mod i 40)
+            should-print (and (>= crt (dec sprite-location-row)) (<= crt (inc sprite-location-row)))]
+        (if should-print (print "#") (print "."))
+        (if (= crt 39) (println))))))
+
+(solve2 sample-input)
+(solve2 (slurp "resources/day10/input.txt"))
+
